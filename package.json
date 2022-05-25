@@ -1,0 +1,25 @@
+{
+  "name": "babel-ast-try",
+  "version": "1.0.0",
+  "description": "babel ast try",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linmingdao/babel-ast-try.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/linmingdao/babel-ast-try/issues"
+  },
+  "homepage": "https://github.com/linmingdao/babel-ast-try#readme",
+  "devDependencies": {
+    "@babel/generator": "^7.18.0",
+    "@babel/parser": "^7.18.0",
+    "@babel/traverse": "^7.18.0",
+    "@babel/types": "^7.18.0"
+  }
+}
