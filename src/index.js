@@ -21,13 +21,23 @@ const ast = parser.parse(code);
 // console.log(JSON.stringify(ast, null, 2));
 
 traverse.default(ast, {
+  FunctionDeclaration(path) {
+    if (path.node.id.name === "square") {
+      path.node.id.name = "execSquare";
+    }
+  },
+  CallExpression(path) {
+    if (path.node.callee.name === "square") {
+      path.node.callee.name = "execSquare";
+    }
+  },
   Identifier(path) {
     // 变量需要为 num
     if (path.node.name !== "num") return;
     // 父级需要为函数
     if (path.parent.type !== "FunctionDeclaration") return;
     // 函数名需要为 square
-    if (path.parent.id.name !== "square") return;
+    if (path.parent.id.name !== "execSquare") return;
 
     // 找到对应的引用
     const referencePaths = path.scope.bindings["num"].referencePaths;
@@ -36,37 +46,17 @@ traverse.default(ast, {
     // 修改自身的值
     path.node.name = "number";
   },
-  //   FunctionDeclaration(path) {
-  //     if (path.node.id.name === "square") {
-  //       const referencePaths = path.scope.bindings["square"].references;
-  //       console.log(referencePaths);
-  //       // 修改引用值
-  //       //   referencePaths.forEach((path) => (path.node.name = "execSquare"));
-  //       //   path.node.id.name = "execSquare";
-  //     }
-  //   },
-  //   enter(path) {
-  //     // console.log(JSON.stringify(path, null, 2));
-  //     // console.log(path.node.type);
-  //     if (
-  //       path.parent.type === "FunctionDeclaration" &&
-  //       path.parent.id.name === "square1" &&
-  //       path.isIdentifier({ name: "n" })
-  //     ) {
-  //     //   console.log(path.parent.type);
-  //       path.node.name = "x";
-  //     }
-  //   },
-  //   FunctionDeclaration(path) {
-  //     // console.log(path.node.type);
-  //     if (path.node.id.name === "square1") {
-  //       // console.log(path.node);
-  //       // path.node.name = "x";
-  //       // path.node.params[0].name = "x";
-  //     }
-  //   },
 });
 
-const newCode = generator.default(ast, {}, code);
+const newCode = generator.default(
+  ast,
+  {
+    retainLines: false,
+    compact: "auto",
+    concise: false,
+    quotes: "double",
+  },
+  code
+);
 
 console.log(newCode.code);
