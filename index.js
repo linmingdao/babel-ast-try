@@ -1,5 +1,6 @@
 const parser = require("@babel/parser");
 const types = require("@babel/types");
+const template = require("@babel/template");
 const traverse = require("@babel/traverse");
 const generator = require("@babel/generator");
 
