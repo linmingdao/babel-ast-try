@@ -25,7 +25,6 @@ const MyVisitor = {
     const param = path.node.params[0];
     const paramName = param.name;
     param.name = "x";
-
     path.traverse(updateParamNameVisitor, { paramName });
   },
 };
